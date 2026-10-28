@@ -31,10 +31,10 @@ function roleFor(s,uid){let m=s.members.find(x=>x.userId===uid);return s.roles.f
 function activeServer(){return state.servers.find(s=>s.id===activeServerId)}
 function render(){if(!user()){authView();return}const me=user(), friends=getFriends(), servers=serversForMe(), server=activeServer();if(server&&!server.channels.some(c=>c.id===activeChannelId))activeChannelId=server.channels[0]?.id||'';let channel=server?.channels.find(c=>c.id===activeChannelId);let dm=state.users.find(u=>u.id===activeDMId);
 let rail=`<button class="rail-icon ${!server&&!dm?'active':''}" data-action="home" title="Início">⌂</button><div class="rail-divider"></div>${servers.map(s=>`<button class="rail-icon ${server?.id===s.id?'active':''}" data-server="${s.id}" title="${esc(s.name)}">${esc(s.emoji||s.name.charAt(0).toUpperCase())}</button>`).join('')}<button class="rail-icon" data-action="new-server" title="Criar servidor">＋</button><div class="rail-bottom"><button class="rail-icon" data-action="profile" title="Meu perfil">${me.avatar?`<img src="${me.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:esc(me.displayName.charAt(0).toUpperCase())}</button></div>`;
-let side='';if(server){side=`<div class="side-head"><span>${esc(server.name)}</span><button class="icon-btn" data-action="server-settings" title="Configurações">⚙</button></div><div class="side-content"><div class="section-title">Canais <button class="text-btn" data-action="add-channel" title="Adicionar canal">＋</button></div>${server.channels.map(c=>`<div class="side-row ${channel?.id===c.id?'active':''}" data-channel="${c.id}"><span class="muted">#</span><span>${esc(c.name)}</span></div>`).join('')}<div class="section-title" style="margin-top:18px">Cargos <button class="text-btn" data-action="server-roles" title="Criar e editar cargos">＋</button></div>${server.roles.map(r=>`<div class="side-row" data-action="server-roles"><span class="role-dot" style="background:${esc(r.color)}"></span><span>${esc(r.name)}</span></div>`).join('')}<div class="section-title" style="margin-top:18px">Membros <button class="text-btn" data-action="add-member" title="Adicionar membro">＋</button></div>${server.members.map(m=>{let u=state.users.find(x=>x.id===m.userId),r=roleFor(server,m.userId);return u?`<div class="side-row" title="${esc(r?.name||'Membro')}">${avatarHTML(u,'sm')}<div class="person-name">${esc(u.displayName)}</div></div>`:''}).join('')}</div>`}else{side=`<div class="side-head"><span>Mensagens</span><button class="icon-btn" data-action="profile" title="Perfil">⚙</button></div><div class="side-content"><div class="side-row ${!dm?'active':''}" data-action="home"><span>🏠</span><span>Início</span></div><div class="section-title" style="margin-top:15px">Amigos <button class="text-btn" data-action="add-friend" title="Adicionar amigo">＋</button></div>${friends.length?friends.map(f=>`<div class="side-row ${dm?.id===f.id?'active':''}" data-dm="${f.id}">${avatarHTML(f,'sm')}<div style="min-width:0"><div class="person-name">${esc(f.displayName)}</div><div class="handle">@${esc(f.username)}</div></div></div>`).join(''):`<div class="muted small" style="padding:8px">Adicione alguém pelo nome de usuário.</div>`}</div>`}
+let side='';if(server){side=`<div class="side-head"><span>${esc(server.name)}</span><button class="icon-btn" data-action="server-settings" title="Configurações">⚙</button></div><div class="side-content"><div class="section-title">Canais <button class="text-btn" data-action="add-channel" title="Adicionar canal">＋</button></div>${server.channels.map(c=>`<div class="side-row ${channel?.id===c.id?'active':''}" data-channel="${c.id}"><span class="muted">#</span><span>${esc(c.name)}</span></div>`).join('')}<div class="section-title" style="margin-top:18px">Cargos <button class="text-btn" data-action="server-roles" title="Criar e editar cargos">＋</button></div>${server.roles.map(r=>`<div class="side-row" data-action="server-roles"><span class="role-dot" style="background:${esc(r.color)}"></span><span>${esc(r.name)}</span></div>`).join('')}<div class="section-title" style="margin-top:18px">Membros <button class="text-btn" data-action="add-member" title="Adicionar membro">＋</button></div>${server.members.map(m=>{let u=state.users.find(x=>x.id===m.userId),r=roleFor(server,m.userId);return u?`<div class="side-row" title="${esc(r?.name||'Membro')}">${avatarHTML(u,'sm')}<div class="person-name">${esc(u.displayName)}</div></div>`:''}).join('')}</div>`}else{side=`<div class="side-head"><span>Mensagens</span><button class="icon-btn" data-action="appearance" title="Personalizar aparência">⚙</button></div><div class="side-content"><div class="side-row ${!dm?'active':''}" data-action="home"><span>🏠</span><span>Início</span></div><div class="section-title" style="margin-top:15px">Amigos <button class="text-btn" data-action="add-friend" title="Adicionar amigo">＋</button></div>${friends.length?friends.map(f=>`<div class="side-row ${dm?.id===f.id?'active':''}" data-dm="${f.id}">${avatarHTML(f,'sm')}<div style="min-width:0"><div class="person-name">${esc(f.displayName)}</div><div class="handle">@${esc(f.username)}</div></div></div>`).join(''):`<div class="muted small" style="padding:8px">Adicione alguém pelo nome de usuário.</div>`}</div>`}
 let main='';if(server){main=`<header class="topbar"><button class="icon-btn mobile-menu" data-action="mobile-channels" title="Canais e servidores">‹</button><span class="muted">#</span><span class="topbar-title">${esc(channel?.name||'canal')}</span><div class="topbar-actions"><button class="icon-btn" data-action="add-member" title="Adicionar membro">♙＋</button><button class="icon-btn" data-action="server-roles" title="Cargos do servidor">♟</button><button class="icon-btn" data-action="server-settings" title="Configurações do servidor">⚙</button></div></header><section class="chat-area"><div class="messages" id="messages"></div><div class="composer-wrap"><form id="composer" class="composer"><input id="message-input" maxlength="2000" placeholder="Mensagem em #${esc(channel?.name||'canal')}" autocomplete="off"><button type="submit" title="Enviar">➤</button></form></div></section>`}else if(dm){main=`<header class="topbar"><button class="icon-btn mobile-menu" data-action="mobile-channels" title="Mensagens">‹</button>${avatarHTML(dm,'sm')}<span class="topbar-title">${esc(dm.displayName)}</span><span class="pill">@${esc(dm.username)}</span></header><section class="chat-area"><div class="messages" id="messages"></div><div class="composer-wrap"><form id="composer" class="composer"><input id="message-input" maxlength="2000" placeholder="Mensagem para ${esc(dm.displayName)}" autocomplete="off"><button type="submit">➤</button></form></div></section>`}else{main=`<header class="topbar"><span class="topbar-title">Satan</span><div class="topbar-actions"><button class="icon-btn" data-action="profile" title="Meu perfil">👤</button></div></header><div class="content"><div class="welcome"><h1>Oi, ${esc(me.displayName)} 👋</h1><p>Seu espaço para conversar e criar comunidades.</p><div class="card-grid"><article class="card"><div class="card-icon">🪄</div><h3>Crie seu servidor</h3><p>Monte um espaço para sua comunidade, organize canais e distribua cargos.</p><button class="btn" data-action="new-server">Criar servidor</button></article><article class="card"><div class="card-icon">🔎</div><h3>Encontre alguém</h3><p>Adicione amigos usando o nome de usuário deles.</p><button class="btn secondary" data-action="add-friend">Adicionar amigo</button></article><article class="card"><div class="card-icon">🖼️</div><h3>Personalize seu perfil</h3><p>Escolha uma foto da galeria e defina como quer aparecer.</p><button class="btn secondary" data-action="profile">Editar perfil</button></article></div><div class="card" style="margin-top:16px"><h3>Seus servidores</h3><p>${servers.length?`Você participa de ${servers.length} servidor${servers.length===1?'':'es'}. Escolha um na barra lateral.`:'Ainda não participa de nenhum servidor.'}</p></div></div></div>`}
-let members=server?`<aside class="members-panel"><div class="section-title">MEMBROS — ${server.members.length}</div>${server.members.map(m=>{let u=state.users.find(x=>x.id===m.userId),r=roleFor(server,m.userId);return u?`<div class="member-row">${avatarHTML(u,'sm')}<div class="member-label" title="${esc(u.displayName)}"><span class="role-dot" style="background:${esc(r?.color||'#aab0bb')}"></span>${esc(u.displayName)}</div></div>`:''}).join('')}</aside>`:'';
-root.innerHTML=`<div class="app ${matchMedia('(max-width:490px)').matches&&(server||dm)&&mobileView==='chat'?'show-main':''}"><nav class="server-rail">${rail}</nav><aside class="side-panel">${side}<div class="side-user">${avatarHTML(me,'sm')}<div class="side-user-info"><div class="person-name">${esc(me.displayName)}</div><div class="handle">@${esc(me.username)}</div></div><button class="icon-btn" data-action="logout" title="Sair">⇥</button></div></aside><main class="main">${main}</main>${members}</div>`;
+let members=server?`<arender()class="members-panel"><div class="section-title">MEMBROS — ${server.members.length}</div>${server.members.map(m=>{let u=state.users.find(x=>x.id===m.userId),r=roleFor(server,m.userId);return u?`<div class="member-row">${avatarHTML(u,'sm')}<div class="member-label" title="${esc(u.displayName)}"><span class="role-dot" style="background:${esc(r?.color||'#aab0bb')}"></span>${esc(u.displayName)}</div></div>`:''}).join('')}</aside>`:'';
+root.innerHTML=`<div class="app ${matchMedia('(max-width:490px)').matches&&(server||dm)&&mobileView==='chat'?'show-main':''}"><nav class="server-rail">${rail}</nav><arender()class="side-panel">${side}<div class="side-user">${avatarHTML(me,'sm')}<div class="side-user-info"><div class="person-name">${esc(me.displayName)}</div><div class="handle">@${esc(me.username)}</div></div><button class="icon-btn" data-action="logout" title="Sair">⇥</button></div></aside><main class="main">${main}</main>${members}</div>`;
 root.querySelectorAll('[data-server]').forEach(b=>b.onclick=()=>{activeServerId=b.dataset.server;activeDMId='';activeChannelId=state.servers.find(s=>s.id===activeServerId)?.channels[0]?.id||'';mobileView=matchMedia('(max-width:490px)').matches?'list':'chat';render()});root.querySelectorAll('[data-channel]').forEach(b=>b.onclick=()=>{activeChannelId=b.dataset.channel;mobileView='chat';render()});root.querySelectorAll('[data-dm]').forEach(b=>b.onclick=()=>{activeDMId=b.dataset.dm;activeServerId='';mobileView='chat';render()});root.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>act(b.dataset.action));const cf=root.querySelector('#composer');if(cf)cf.onsubmit=sendMessage;
 if(server||dm)renderMessages(server,channel,dm);
 }
@@ -43,6 +43,148 @@ function renderMessages(server,channel,dm){let box=document.getElementById('mess
 function sendMessage(ev){ev.preventDefault();let input=document.getElementById('message-input'),text=input.value.trim();if(!text)return;let server=activeServer(),channel=server?.channels.find(c=>c.id===activeChannelId),dm=state.users.find(u=>u.id===activeDMId);if(!server&&!dm)return;let k=messageKey(server,channel,dm);state.messages[k]??=[];state.messages[k].push({id:id(),userId:currentId,text,time:Date.now()});save();input.value='';renderMessages(server,channel,dm)}
 function modal(title,body,after){modalRoot.innerHTML=`<div class="modal-bg"><section class="modal"><div class="modal-head"><h2>${title}</h2><button class="icon-btn" data-close>✕</button></div>${body}</section></div>`;modalRoot.querySelector('[data-close]').onclick=closeModal;modalRoot.querySelector('.modal-bg').onclick=e=>{if(e.target.classList.contains('modal-bg'))closeModal()};if(after)after()}
 function closeModal(){modalRoot.innerHTML=''}
+
+const DEFAULT_THEME = {
+  bg: '#313338',
+  rail: '#1e1f22',
+  panel: '#2b2d31',
+  panel2: '#383a40',
+  line: '#3f4147',
+  accent: '#8b5cf6',
+  accent2: '#a78bfa'
+};
+
+function getTheme() {
+  try {
+    return {
+      ...DEFAULT_THEME,
+      ...JSON.parse(
+        localStorage.getItem('satan_theme_' + currentId) || '{}'
+      )
+    };
+  } catch (e) {
+    return { ...DEFAULT_THEME };
+  }
+}
+
+function applyTheme(theme = getTheme()) {
+  const style = document.documentElement.style;
+
+  Object.entries(theme).forEach(([key, value]) => {
+    if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+      style.setProperty('--' + key, value);
+    }
+  });
+}
+
+function appearanceModal() {
+  const theme = getTheme();
+
+  const presets = [
+    { name: 'Roxo', bg: '#241633', rail: '#171020', panel: '#30213f', panel2: '#40304f', line: '#514060', accent: '#a855f7', accent2: '#c084fc' },
+    { name: 'Azul', bg: '#202b3c', rail: '#151d2a', panel: '#253449', panel2: '#34465d', line: '#40536b', accent: '#3b82f6', accent2: '#93c5fd' },
+    { name: 'Rosa', bg: '#35232e', rail: '#241820', panel: '#402b39', panel2: '#503747', line: '#634354', accent: '#ec4899', accent2: '#f9a8d4' },
+    { name: 'Verde', bg: '#202e29', rail: '#15211c', panel: '#293b34', panel2: '#354b41', line: '#456054', accent: '#22c55e', accent2: '#86efac' },
+    { name: 'Escuro', bg: '#202124', rail: '#141416', panel: '#292a2e', panel2: '#36373c', line: '#44454b', accent: '#8b5cf6', accent2: '#a78bfa' },
+    { name: 'Cinza', bg: '#313338', rail: '#1e1f22', panel: '#2b2d31', panel2: '#383a40', line: '#3f4147', accent: '#8b5cf6', accent2: '#a78bfa' }
+  ];
+
+  const colorField = (key, label) => `
+    <label>${label}</label>
+    <div class="appearance-color-row">
+      <input class="field appearance-color"
+        type="color" data-color="${key}" value="${theme[key]}">
+      <span class="muted small" data-hex="${key}">${theme[key]}</span>
+    </div>
+  `;
+
+  modal('Personalizar aparência', `
+    <p class="muted small">
+      Escolha as cores do seu Satan. As alterações podem ser visualizadas
+      antes de salvar.
+    </p>
+
+    <h3>Temas prontos</h3>
+    <div class="appearance-presets">
+      ${presets.map((p, i) => `
+        <button type="button" class="appearance-preset"
+          data-preset="${i}">
+          <span style="background:${p.bg}"></span>
+          ${p.name}
+        </button>
+      `).join('')}
+    </div>
+
+    <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+
+    <h3>Cores personalizadas</h3>
+    ${colorField('bg', 'Fundo principal')}
+    ${colorField('rail', 'Barra lateral')}
+    ${colorField('panel', 'Painéis e cartões')}
+    ${colorField('panel2', 'Elementos secundários')}
+    ${colorField('accent', 'Botões e destaques')}
+    ${colorField('accent2', 'Destaques claros')}
+
+    <div class="modal-actions">
+      <button type="button" class="btn secondary" data-reset>
+        Restaurar padrão
+      </button>
+      <button type="button" class="btn" data-save-theme>
+        Salvar aparência
+      </button>
+    </div>
+  `, () => {
+    const updateFields = () => {
+      modalRoot.querySelectorAll('[data-color]').forEach(input => {
+        const key = input.dataset.color;
+        input.value = theme[key];
+        modalRoot.querySelector(`[data-hex="${key}"]`).textContent = theme[key];
+      });
+    };
+
+    const preview = () => applyTheme(theme);
+
+    modalRoot.querySelectorAll('[data-color]').forEach(input => {
+      input.oninput = () => {
+        theme[input.dataset.color] = input.value;
+        updateFields();
+        preview();
+      };
+    });
+
+    modalRoot.querySelectorAll('[data-preset]').forEach(button => {
+      button.onclick = () => {
+        const preset = presets[Number(button.dataset.preset)];
+        Object.assign(theme, preset);
+        updateFields();
+        preview();
+      };
+    });
+
+    modalRoot.querySelector('[data-reset]').onclick = () => {
+      Object.assign(theme, DEFAULT_THEME);
+      updateFields();
+      preview();
+    };
+
+    modalRoot.querySelector('[data-save-theme]').onclick = () => {
+      try {
+        localStorage.setItem(
+          'satan_theme_' + currentId,
+          JSON.stringify(theme)
+        );
+        applyTheme(theme);
+        closeModal();
+        toast('Aparência salva!');
+      } catch (e) {
+        toast('Não foi possível salvar as cores.');
+      }
+    };
+
+    updateFields();
+  });
+}
+
 function act(a){if(a==='home'){activeServerId='';activeDMId='';mobileView='list';render()}else if(a==='new-server')newServerModal();else if(a==='profile')profileModal();else if(a==='add-friend')friendModal();else if(a==='add-member')memberModal();else if(a==='server-settings'||a==='server-roles')settingsModal();else if(a==='add-channel')channelModal();else if(a==='mobile-channels'){mobileView='list';render()}else if(a==='logout'){sessionStorage.removeItem(SESSION);currentId='';activeServerId='';activeDMId='';mobileView='list';authView()}else if(a==='back'){mobileView='list';render()}}
 function newServerModal(){modal('Criar servidor',`<p class="muted small">Dê um nome ao seu espaço. Você será o dono e poderá criar canais e cargos.</p><form id="new-server-form"><label>Nome do servidor</label><input class="field" name="name" maxlength="40" placeholder="Minha comunidade" required><div class="split"><div><label>Ícone (emoji)</label><input class="field" name="emoji" maxlength="4" value="🌟" placeholder="🌟"></div><div><label>Descrição (opcional)</label><input class="field" name="description" maxlength="100" placeholder="Sobre a comunidade"></div></div><div class="modal-actions"><button type="button" class="btn secondary" data-close>Cancelar</button><button class="btn">Criar servidor</button></div></form>`,()=>{modalRoot.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModal);modalRoot.querySelector('#new-server-form').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target),sid=id(),owner={id:'owner',name:'Dono',color:'#f1c75b'},member={id:'member',name:'Membro',color:'#aab0bb'};let s={id:sid,name:String(f.get('name')).trim(),emoji:String(f.get('emoji')).trim()||'🌟',description:String(f.get('description')).trim(),channels:[{id:id(),name:'geral'}],roles:[owner,member],members:[{userId:currentId,roleId:'owner'}]};state.servers.push(s);save();activeServerId=sid;activeChannelId=s.channels[0].id;activeDMId='';mobileView=matchMedia('(max-width:490px)').matches?'list':'chat';closeModal();render();toast('Servidor criado!')};})}
 function friendModal(){modal('Adicionar amigo',`<p class="muted small">Digite o nome de usuário exato. A busca funciona entre contas criadas neste mesmo navegador.</p><form id="friend-form"><label>Nome de usuário</label><div style="display:flex;gap:8px"><input class="field" name="username" placeholder="@nome_de_usuario" required><button class="btn">Adicionar</button></div><div id="friend-result" class="error"></div></form>`,()=>{modalRoot.querySelector('#friend-form').onsubmit=e=>{e.preventDefault();let name=new FormData(e.target).get('username').trim().replace(/^@/,'');let target=state.users.find(u=>u.username.toLowerCase()===name.toLowerCase());let result=modalRoot.querySelector('#friend-result');if(!target){result.textContent='Não encontrei essa conta neste navegador.';return}if(target.id===currentId){result.textContent='Esse é o seu próprio usuário.';return}if(state.friends.some(f=>f.users.includes(currentId)&&f.users.includes(target.id))){result.textContent='Essa pessoa já está na sua lista.';return}state.friends.push({users:[currentId,target.id]});save();closeModal();render();toast(`@${target.username} foi adicionado!`)}})}
