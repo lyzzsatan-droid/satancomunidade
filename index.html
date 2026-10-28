@@ -185,52 +185,7 @@ function appearanceModal() {
   });
 }
 
-
-function act(a){
-  if(a==='home'){
-    activeServerId='';
-    activeDMId='';
-    mobileView='list';
-    render();
-  }
-  else if(a==='appearance'){
-    appearanceModal();
-  }
-  else if(a==='new-server'){
-    newServerModal();
-  }
-  else if(a==='profile'){
-    profileModal();
-  }
-  else if(a==='add-friend'){
-    friendModal();
-  }
-  else if(a==='add-member'){
-    memberModal();
-  }
-  else if(a==='server-settings'||a==='server-roles'){
-    settingsModal();
-  }
-  else if(a==='add-channel'){
-    channelModal();
-  }
-  else if(a==='mobile-channels'){
-    mobileView='list';
-    render();
-  }
-  else if(a==='logout'){
-    sessionStorage.removeItem(SESSION);
-    currentId='';
-    activeServerId='';
-    activeDMId='';
-    mobileView='list';
-    authView();
-  }
-  else if(a==='back'){
-    mobileView='list';
-    render();
-  }
-}
+function act(a){if(a==='home'){activeServerId='';activeDMId='';mobileView='list';render()}else if(a==='new-server')newServerModal();else if(a==='profile')profileModal();else if(a==='add-friend')friendModal();else if(a==='add-member')memberModal();else if(a==='server-settings'||a==='server-roles')settingsModal();else if(a==='add-channel')channelModal();else if(a==='mobile-channels'){mobileView='list';render()}else if(a==='logout'){sessionStorage.removeItem(SESSION);currentId='';activeServerId='';activeDMId='';mobileView='list';authView()}else if(a==='back'){mobileView='list';render()}}
 function newServerModal(){modal('Criar servidor',`<p class="muted small">Dê um nome ao seu espaço. Você será o dono e poderá criar canais e cargos.</p><form id="new-server-form"><label>Nome do servidor</label><input class="field" name="name" maxlength="40" placeholder="Minha comunidade" required><div class="split"><div><label>Ícone (emoji)</label><input class="field" name="emoji" maxlength="4" value="🌟" placeholder="🌟"></div><div><label>Descrição (opcional)</label><input class="field" name="description" maxlength="100" placeholder="Sobre a comunidade"></div></div><div class="modal-actions"><button type="button" class="btn secondary" data-close>Cancelar</button><button class="btn">Criar servidor</button></div></form>`,()=>{modalRoot.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModal);modalRoot.querySelector('#new-server-form').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target),sid=id(),owner={id:'owner',name:'Dono',color:'#f1c75b'},member={id:'member',name:'Membro',color:'#aab0bb'};let s={id:sid,name:String(f.get('name')).trim(),emoji:String(f.get('emoji')).trim()||'🌟',description:String(f.get('description')).trim(),channels:[{id:id(),name:'geral'}],roles:[owner,member],members:[{userId:currentId,roleId:'owner'}]};state.servers.push(s);save();activeServerId=sid;activeChannelId=s.channels[0].id;activeDMId='';mobileView=matchMedia('(max-width:490px)').matches?'list':'chat';closeModal();render();toast('Servidor criado!')};})}
 function friendModal(){modal('Adicionar amigo',`<p class="muted small">Digite o nome de usuário exato. A busca funciona entre contas criadas neste mesmo navegador.</p><form id="friend-form"><label>Nome de usuário</label><div style="display:flex;gap:8px"><input class="field" name="username" placeholder="@nome_de_usuario" required><button class="btn">Adicionar</button></div><div id="friend-result" class="error"></div></form>`,()=>{modalRoot.querySelector('#friend-form').onsubmit=e=>{e.preventDefault();let name=new FormData(e.target).get('username').trim().replace(/^@/,'');let target=state.users.find(u=>u.username.toLowerCase()===name.toLowerCase());let result=modalRoot.querySelector('#friend-result');if(!target){result.textContent='Não encontrei essa conta neste navegador.';return}if(target.id===currentId){result.textContent='Esse é o seu próprio usuário.';return}if(state.friends.some(f=>f.users.includes(currentId)&&f.users.includes(target.id))){result.textContent='Essa pessoa já está na sua lista.';return}state.friends.push({users:[currentId,target.id]});save();closeModal();render();toast(`@${target.username} foi adicionado!`)}})}
 function memberModal(){let s=activeServer();if(!s)return;modal('Adicionar membro',`<p class="muted small">Adicione uma conta pelo nome de usuário. Nesta demonstração, a conta precisa existir neste navegador.</p><form id="member-form"><label>Nome de usuário</label><div style="display:flex;gap:8px"><input class="field" name="username" placeholder="@nome_de_usuario" required><button class="btn">Adicionar</button></div><div id="member-result" class="error"></div></form>`,()=>{modalRoot.querySelector('#member-form').onsubmit=e=>{e.preventDefault();let name=new FormData(e.target).get('username').trim().replace(/^@/,''),u=state.users.find(x=>x.username.toLowerCase()===name.toLowerCase()),result=modalRoot.querySelector('#member-result');if(!u){result.textContent='Não encontrei essa conta neste navegador.';return}if(s.members.some(m=>m.userId===u.id)){result.textContent='Essa pessoa já está no servidor.';return}s.members.push({userId:u.id,roleId:s.roles.find(r=>r.id==='member')?.id||s.roles[0].id});save();closeModal();render();toast(`${u.displayName} entrou no servidor.`)}})}
