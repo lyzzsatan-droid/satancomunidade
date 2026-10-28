@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Satan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/satan_accent</item>
+        <item name="colorPrimaryVariant">@color/satan_surface</item>
+        <item name="colorOnPrimary">@color/satan_text</item>
+        <item name="colorSecondary">@color/satan_accent</item>
+        <item name="android:windowBackground">@color/satan_bg</item>
+        <item name="android:statusBarColor">@color/satan_surface</item>
+        <item name="android:navigationBarColor">@color/satan_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="satan_bg">#1E1F22</color>
+    <color name="satan_surface">#2B2D31</color>
+    <color name="satan_accent">#5865F2</color>
+    <color name="satan_text">#F2F3F5</color>
+    <color name="satan_text_muted">#949BA4</color>
+    <color name="satan_online">#23A55A</color>
+    <color name="satan_offline">#F23F42</color>
+</resources>
