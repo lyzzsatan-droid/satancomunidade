@@ -9,6 +9,271 @@
 @media(max-width:650px){.app{min-height:100vh}.server-rail{width:58px;padding-top:9px}.rail-icon{width:42px;height:42px;border-radius:14px}.side-panel{width:210px}.side-head{height:56px;padding:0 12px}.topbar{height:56px;padding:0 12px}.content{padding:17px}.messages{padding:18px 13px 8px}.composer-wrap{padding:0 10px 12px}.welcome h1{font-size:24px}}
 @media(max-width:490px){.app{height:100dvh;min-height:100dvh;flex-direction:column}.server-rail{order:3;width:100%;height:64px;flex:none;flex-direction:row;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:7px 10px calc(7px + env(safe-area-inset-bottom));gap:9px;border-top:1px solid #ffffff0c}.server-rail::-webkit-scrollbar{display:none}.rail-icon{width:40px;height:40px;border-radius:14px;flex:none}.rail-icon.active:before{left:auto;top:-8px;width:24px;height:3px;border-radius:0 0 3px 3px}.rail-divider{width:2px;height:30px;flex:none}.rail-bottom{margin-top:0;margin-left:auto}.side-panel{order:1;width:100%;max-width:none;min-height:0;flex:1;border-right:0}.main{order:1;display:none;width:100%;min-height:0;flex:1}.app.show-main .side-panel{display:none}.app.show-main .main{display:flex}.app.show-main .server-rail{display:flex}.mobile-menu{display:inline-grid}.auth-card{padding:24px}.split{grid-template-columns:1fr}}
 </style>
+  
+/* ===== SATAN COMUNIDADES | TEMA GAMER ROXO ===== */
+:root {
+  --bg: #09070f;
+  --rail: #08060d;
+  --panel: #110d1b;
+  --panel2: #1c142b;
+  --line: #39234f;
+  --text: #f7f0ff;
+  --muted: #b3a5c5;
+  --accent: #a855f7;
+  --accent2: #c084fc;
+  --green: #4adea7;
+  --red: #fb7185;
+  --shadow: 0 18px 60px #000b;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, #581c8730, transparent 55%),
+    var(--bg);
+}
+
+.auth-wrap {
+  background:
+    radial-gradient(circle at 15% 20%, #9333ea35, transparent 35%),
+    radial-gradient(circle at 85% 80%, #6d28d930, transparent 38%),
+    #09070f;
+}
+
+.auth-card {
+  background: #100b19f5;
+  border: 1px solid #a855f750;
+  box-shadow: 0 0 35px #9333ea18, var(--shadow);
+  animation: satanEnter .55s ease both;
+}
+
+.brand-mark {
+  background: linear-gradient(135deg, #7e22ce, #c026d3);
+  box-shadow: 0 0 22px #a855f760;
+}
+
+.server-rail {
+  background: #08060d;
+  border-right: 1px solid #a855f718;
+}
+
+.rail-icon {
+  background: #181020;
+  border: 1px solid #ffffff08;
+  transition: transform .2s ease, box-shadow .2s ease,
+    border-radius .2s ease, background .2s ease;
+}
+
+.rail-icon:hover,
+.rail-icon.active {
+  background: linear-gradient(145deg, #7e22ce, #a855f7);
+  box-shadow: 0 0 20px #a855f755;
+  transform: translateY(-2px);
+}
+
+.side-panel {
+  background: #100b19;
+  border-right: 1px solid #a855f720;
+}
+
+.side-head,
+.topbar {
+  background: #100b19;
+  border-bottom: 1px solid #a855f725;
+}
+
+.side-row {
+  transition: background .18s ease, transform .18s ease;
+}
+
+.side-row:hover,
+.side-row.active {
+  background: #a855f71c;
+  color: #e9d5ff;
+}
+
+.side-row:hover {
+  transform: translateX(3px);
+}
+
+.avatar {
+  background: linear-gradient(135deg, #7e22ce, #d946ef);
+  box-shadow: 0 0 12px #a855f720;
+}
+
+.card {
+  background: linear-gradient(145deg, #171020, #100b19);
+  border: 1px solid #a855f728;
+  box-shadow: 0 8px 25px #0003;
+  transition: transform .22s ease, border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #c084fc90;
+  box-shadow: 0 12px 32px #9333ea22;
+}
+
+.card-icon {
+  filter: drop-shadow(0 0 9px #c084fc70);
+}
+
+.btn {
+  background: linear-gradient(135deg, #7e22ce, #a855f7);
+  box-shadow: 0 4px 16px #9333ea25;
+  transition: transform .2s ease, filter .2s ease,
+    box-shadow .2s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px #a855f750;
+}
+
+.btn.secondary {
+  background: #21152f;
+  border-color: #573575;
+}
+
+.btn.secondary:hover {
+  background: #301b45;
+  border-color: #c084fc;
+}
+
+.btn.ghost:hover,
+.icon-btn:hover,
+.text-btn:hover {
+  background: #a855f720;
+  color: #e9d5ff;
+}
+
+.field {
+  background: #0b0811;
+  border-color: #39234f;
+}
+
+.field:focus {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 3px #a855f728,
+    0 0 15px #9333ea18;
+}
+
+.messages {
+  background: radial-gradient(
+    ellipse at top,
+    #581c8710,
+    transparent 65%
+  );
+}
+
+.message {
+  animation: satanMessage .25s ease both;
+}
+
+.message-author {
+  color: #e9d5ff;
+}
+
+.composer {
+  background: #171020;
+  border: 1px solid #573575;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.composer:focus-within {
+  border-color: #a855f7;
+  box-shadow: 0 0 18px #9333ea25;
+}
+
+.composer button {
+  background: linear-gradient(135deg, #7e22ce, #a855f7);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.composer button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 15px #a855f760;
+}
+
+.members-panel {
+  background: #0d0913;
+  border-left-color: #a855f720;
+}
+
+.member-row {
+  transition: background .18s ease;
+}
+
+.member-row:hover {
+  background: #a855f718;
+}
+
+.modal {
+  background: #130d1d;
+  border-color: #a855f750;
+  box-shadow: 0 0 40px #9333ea20, var(--shadow);
+  animation: satanEnter .22s ease both;
+}
+
+.modal-bg {
+  background: #000b;
+  backdrop-filter: blur(5px);
+}
+
+.toast {
+  background: #21152f;
+  border: 1px solid #a855f760;
+  box-shadow: 0 0 25px #9333ea25;
+}
+
+.tabs {
+  background: #0b0811;
+}
+
+.tabs button.active {
+  background: #301b45;
+  color: #f7f0ff;
+}
+
+.notice {
+  background: #a855f715;
+  border-color: #a855f750;
+  color: #e9d5ff;
+}
+
+@keyframes satanEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes satanMessage {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 </head>
 <body>
 <div id="root"></div><div id="modal-root"></div><div id="toast" class="toast"></div>
